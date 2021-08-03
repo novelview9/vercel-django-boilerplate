@@ -1,0 +1,27 @@
+{
+    "name": "now-django-staticfiles",
+    "builds": [
+        {
+            "src": "build.sh",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "staticfiles_build"
+            }
+        },
+        {
+            "src": "vercel_app/wsgi.py",
+            "use": "@ardnt/vercel-python-wsgi",
+            "config": { "maxLambdaSize": "15mb" }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/static/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "vercel_app/wsgi.py"
+        }
+    ]
+}
